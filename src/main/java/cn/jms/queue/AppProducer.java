@@ -25,7 +25,7 @@ public class AppProducer {
         // 4. 创建会话
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-        // 5. 创建一个目标
+        // 5. 创建一个目标(Queue) 和 主题模式只有这一点区别
         Destination destination = session.createQueue(queueName);
 
         // 6. 创建一个生产者

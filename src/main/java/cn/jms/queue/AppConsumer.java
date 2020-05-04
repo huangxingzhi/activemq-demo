@@ -25,22 +25,19 @@ public class AppConsumer {
         // 4. 创建会话
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-        // 5. 创建一个目标
+        // 5. 创建一个目标(Queue) 和 主题模式只有这一点区别
         Destination destination = session.createQueue(queueName);
 
         // 6. 创建一个消费者
         MessageConsumer consumer = session.createConsumer(destination);
 
         // 7. 创建一个监听器
-        consumer.setMessageListener(new MessageListener() {
-            @Override
-            public void onMessage(Message message) {
-                TextMessage textMessage = (TextMessage) message;
-                try {
-                    System.out.println("接收消息：" + textMessage.getText());
-                } catch (JMSException e) {
-                    e.printStackTrace();
-                }
+        consumer.setMessageListener(message -> {
+            TextMessage textMessage = (TextMessage) message;
+            try {
+                System.out.println("接收消息：" + textMessage.getText());
+            } catch (JMSException e) {
+                e.printStackTrace();
             }
         });
 
